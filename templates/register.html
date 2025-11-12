@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Register | Symptera AI</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      height: 100vh;
+      background: radial-gradient(circle at top left, #0f172a 0%, #060b12 100%);
+      color: #e6f6ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* glowing background animation */
+    .glow {
+      position: absolute;
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(0,255,255,0.25), transparent 70%);
+      top: -200px;
+      left: -150px;
+      border-radius: 50%;
+      filter: blur(100px);
+      animation: pulse 6s infinite ease-in-out;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.6; transform: scale(1); }
+      50% { opacity: 0.9; transform: scale(1.2); }
+    }
+
+    /* registration box */
+    .register-box {
+      background: rgba(12, 22, 35, 0.85);
+      border: 1px solid rgba(0, 255, 255, 0.25);
+      border-radius: 16px;
+      padding: 35px 40px;
+      width: 420px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.1);
+      text-align: center;
+      z-index: 1;
+    }
+
+    .register-box h2 {
+      color: #00eaff;
+      font-size: 1.6rem;
+      margin-bottom: 25px;
+      letter-spacing: 0.5px;
+    }
+
+    form input,
+    form select,
+    form textarea {
+      width: 100%;
+      margin-bottom: 12px;
+      padding: 11px;
+      border: none;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.08);
+      color: #e8f9ff;
+      font-size: 14px;
+      outline: none;
+      transition: 0.3s;
+      resize: vertical;
+    }
+
+    form input::placeholder,
+    form textarea::placeholder {
+      color: #9cb7c8;
+    }
+
+    form select {
+      color: #cceaff;
+    }
+
+    form input:focus,
+    form select:focus,
+    form textarea:focus {
+      background: rgba(255, 255, 255, 0.12);
+      box-shadow: 0 0 12px rgba(0, 255, 255, 0.3);
+    }
+
+    label {
+      color: #9bdfff;
+      display: block;
+      text-align: left;
+      margin: 8px 0 4px;
+      font-size: 14px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(90deg, #00eaff, #007bff);
+      color: #fff;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 8px;
+    }
+
+    button:hover {
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
+      transform: translateY(-2px);
+    }
+
+    p {
+      margin-top: 14px;
+      font-size: 14px;
+      color: #9cc9ff;
+    }
+
+    a {
+      color: #00bfff;
+      text-decoration: none;
+      font-weight: 500;
+      transition: 0.2s;
+    }
+
+    a:hover {
+      text-shadow: 0 0 8px #00bfff;
+    }
+
+    .register-box::after {
+      content: '';
+      position: absolute;
+      bottom: -3px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 70%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #00eaff, transparent);
+      box-shadow: 0 0 15px #00eaff;
+      border-radius: 50%;
+    }
+
+    /* responsive */
+    @media (max-width: 500px) {
+      .register-box {
+        width: 90%;
+        padding: 25px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="glow"></div>
+
+  <div class="register-box">
+    <h2>Create Your Symptera Account</h2>
+
+    <form method="POST">
+      <input type="text" name="username" placeholder="Username" required />
+      <input type="email" name="email" placeholder="Email" required />
+      <input type="password" name="password" placeholder="Password" required />
+
+      <label>Gender:</label>
+      <select name="gender">
+        <option value="">Select</option>
+        <option value="female">Female</option>
+        <option value="male">Male</option>
+        <option value="other">Other</option>
+      </select>
+
+      <input type="number" name="age" placeholder="Age" />
+      <input type="number" name="height" placeholder="Height (cm)" />
+      <input type="number" name="weight" placeholder="Weight (kg)" />
+      <textarea name="chronic_conditions" placeholder="Chronic conditions (e.g. diabetes, asthma)"></textarea>
+      <textarea name="allergies" placeholder="Allergies (if any)"></textarea>
+      <textarea name="medications" placeholder="Medications (if any)"></textarea>
+
+      <button type="submit">Register</button>
+      <p>Already have an account? <a href="{{ url_for('login') }}">Login</a></p>
+    </form>
+  </div>
+</body>
+</html>

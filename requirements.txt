@@ -1,0 +1,13 @@
+flask
+flask_sqlalchemy
+flask_wtf
+wtforms
+flask_login
+werkzeug
+sqlalchemy
+python-dotenv
+requests
+gunicorn
+ollama
+openai==2.2.0
+transformers

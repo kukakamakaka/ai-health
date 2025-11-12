@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dashboard | AI Health</title>
+  <style>
+    body {
+      font-family: "Arial", sans-serif;
+      background-color: #f7f8fc;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #2b7bff;
+      color: white;
+      padding: 15px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header a {
+      color: white;
+      text-decoration: none;
+      margin-left: 15px;
+      font-weight: bold;
+    }
+
+    main {
+      max-width: 800px;
+      margin: 50px auto;
+      background: white;
+      border-radius: 10px;
+      padding: 30px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      color: #2b7bff;
+      text-align: center;
+    }
+
+    .user-info {
+      text-align: center;
+      font-size: 18px;
+      color: #333;
+      margin-bottom: 30px;
+    }
+
+    .advice {
+      background: #f0f4ff;
+      border-left: 5px solid #2b7bff;
+      padding: 15px 20px;
+      font-size: 17px;
+      line-height: 1.5;
+      border-radius: 5px;
+    }
+
+    .links {
+      margin-top: 40px;
+      text-align: center;
+    }
+
+    .links a {
+      display: inline-block;
+      margin: 10px;
+      background-color: #2b7bff;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .links a:hover {
+      background-color: #1a5fd1;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div><strong>AI Health Assistant</strong></div>
+  <div>
+    <a href="{{ url_for('logout') }}">Logout</a>
+  </div>
+</header>
+
+<main>
+  <h1>Welcome, {{ user.username }} 👋</h1>
+
+  <div class="user-info">
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>Gender:</strong> {{ user.gender or 'Not specified' }}</p>
+    <p><strong>Age:</strong> {{ user.age or 'Not specified' }}</p>
+  </div>
+
+  <div class="advice">
+    <strong>Your personalized advice:</strong><br>
+    {{ advice }}
+  </div>
+
+  <div class="links">
+    <a href="{{ url_for('symptoms') }}">Check Symptoms</a>
+    <a href="{{ url_for('photo') }}">Upload Photo</a>
+    <div class="actions" style="margin-top: 20px;">
+    <a href="{{ url_for('edit_profile') }}" class="btn btn-warning">✏️ Edit Profile</a>
+
+    <form action="{{ url_for('delete_account') }}" method="POST" style="display:inline;">
+        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete your account? This cannot be undone!');">
+            🗑️ Delete Account
+        </button>
+    </form>
+</div>
+
+    <a href="{{ url_for('tips') }}">Get Tips</a>
+    <a href="{{ url_for('history') }}">History</a>
+  </div>
+</main>
+
+</body>
+</html>

@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+    body {
+        font-family: "Poppins", sans-serif;
+        background: radial-gradient(circle at 20% 20%, #0a0b1e, #0f1229 70%);
+        color: #e2e8f0;
+        overflow-x: hidden;
+    }
+
+    .timeline-container {
+        max-width: 900px;
+        margin: 80px auto;
+        padding: 0 20px;
+        position: relative;
+    }
+
+    .timeline-title {
+        text-align: center;
+        font-size: 2.6rem;
+        font-weight: 700;
+        background: linear-gradient(90deg, #00c6ff, #7d2ae8);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 10px;
+        text-shadow: 0 0 20px rgba(125, 42, 232, 0.6);
+    }
+
+    .timeline-subtitle {
+        text-align: center;
+        font-size: 1rem;
+        color: #94a3b8;
+        margin-bottom: 60px;
+        letter-spacing: 0.5px;
+    }
+
+    .timeline-line {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        width: 3px;
+        height: 100%;
+        background: linear-gradient(to bottom, #00c6ff, #7d2ae8);
+        opacity: 0.25;
+        transform: translateX(-50%);
+    }
+
+    .timeline-item {
+        position: relative;
+        width: 50%;
+        padding: 25px 35px;
+        background: rgba(30, 26, 58, 0.7);
+        border-radius: 20px;
+        box-shadow: 0 0 30px rgba(0, 198, 255, 0.15);
+        backdrop-filter: blur(10px);
+        margin-bottom: 50px;
+        animation: slideUp 0.6s ease;
+        transition: 0.3s ease;
+    }
+
+    .timeline-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 0 40px rgba(125, 42, 232, 0.4);
+    }
+
+    .timeline-item:nth-child(odd) {
+        left: 0;
+        border-left: 3px solid #00c6ff;
+    }
+
+    .timeline-item:nth-child(even) {
+        left: 50%;
+        border-right: 3px solid #7d2ae8;
+    }
+
+    .timeline-item h3 {
+        margin-bottom: 10px;
+        font-size: 1.3rem;
+        color: #00c6ff;
+    }
+
+    .timeline-item p {
+        color: #cbd5e1;
+        font-size: 1rem;
+        line-height: 1.5;
+    }
+
+    .timeline-item img {
+        width: 100%;
+        border-radius: 12px;
+        margin-top: 15px;
+        box-shadow: 0 0 10px rgba(0, 198, 255, 0.3);
+    }
+
+    .timeline-time {
+        display: block;
+        margin-top: 8px;
+        font-size: 0.85rem;
+        color: #94a3b8;
+    }
+
+    @keyframes slideUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+        .timeline-line {
+            left: 10px;
+        }
+
+        .timeline-item,
+        .timeline-item:nth-child(even),
+        .timeline-item:nth-child(odd) {
+            width: 100%;
+            left: 0;
+            border: none;
+            padding: 20px;
+        }
+
+        .timeline-title {
+            font-size: 2rem;
+        }
+    }
+</style>
+
+<div class="timeline-container">
+    <h1 class="timeline-title">🤖 Aika Memory Log</h1>
+    <p class="timeline-subtitle">Tracking your health insights, scans, and AI guidance over time</p>
+    <div class="timeline-line"></div>
+
+    <!-- Симптомы -->
+    {% for s in symptoms %}
+    <div class="timeline-item">
+        <h3>🧠 Symptom</h3>
+        <p>{{ s.text }}</p>
+        <p>Category: <b>{{ s.category }}</b></p>
+        <span class="timeline-time">{{ s.created_at.strftime("%d-%m-%Y %H:%M") }}</span>
+    </div>
+    {% endfor %}
+
+    <!-- Фото -->
+    {% for p in photos %}
+    <div class="timeline-item">
+        <h3>🧬 Neural Scan</h3>
+        <p>Result: <b>{{ p.result }}</b></p>
+        <img src="{{ url_for('static', filename='uploads/' ~ p.filename) }}" alt="Scan">
+        <span class="timeline-time">{{ p.created_at.strftime("%d-%m-%Y %H:%M") }}</span>
+    </div>
+    {% endfor %}
+
+    <!-- Советы -->
+    {% for t in tips %}
+    <div class="timeline-item">
+        <h3>💡 Health Tip</h3>
+        <p>{{ t.text }}</p>
+        <span class="timeline-time">{{ t.created_at.strftime("%d-%m-%Y %H:%M") }}</span>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,232 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- Подключение Font Awesome для иконок -->
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+/>
+
+<style>
+  footer {
+        display: none !important;
+    }
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background: radial-gradient(circle at 20% 20%, #080a18, #0d1027 80%);
+  color: #e2e8f0;
+  overflow-x: hidden;
+
+}
+
+.account-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  padding: 80px 20px;
+}
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 10px;
+  align-items: center;
+  width: 100%;
+  max-width: 2100px;
+  animation: fadeIn 0.8s ease;
+}
+
+/* ==== ЛЕВАЯ СТОРОНА ==== */
+.avatar-zone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-ring {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, #00c6ff, #7d2ae8, #00c6ff);
+  animation: spin 10s linear infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 40px rgba(125,42,232,0.4);
+}
+
+.avatar-inner {
+  width: 185px;
+  height: 185px;
+  border-radius: 50%;
+  background: #0f1229;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4rem;
+  color: #00c6ff;
+  text-shadow: 0 0 25px rgba(0,198,255,0.6);
+}
+
+.profile-name {
+  margin-top: 25px;
+  font-size: 2rem;
+  font-weight: 600;
+  background: linear-gradient(90deg, #00c6ff, #7d2ae8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 25px rgba(125,42,232,0.5);
+}
+
+.status {
+  font-size: 0.9rem;
+  color: #94a3b8;
+  margin-top: 5px;
+}
+
+/* ==== ПРАВАЯ СТОРОНА ==== */
+.info-zone {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.info-chip {
+  background: rgba(255,255,255,0.03);
+  border-left: 3px solid #7d2ae8;
+  padding: 15px 20px;
+  border-radius: 2px;
+  transition: 0.3s;
+  backdrop-filter: blur(4px);
+}
+
+.info-chip:hover {
+  background: rgba(125,42,232,0.1);
+  border-left-color: #00c6ff;
+  transform: translateX(6px);
+}
+
+.info-chip strong {
+  color: #00c6ff;
+}
+
+/* ==== КНОПКИ ==== */
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 40px;
+}
+
+.actions a, .actions button {
+  flex: 1;
+  min-width: 160px;
+  text-align: center;
+  padding: 14px 0;
+  border-radius: 2px;
+  font-weight: 600;
+  border: none;
+  transition: 0.3s ease;
+  cursor: pointer;
+  letter-spacing: 0.3px;
+}
+
+.btn-edit {
+  background: linear-gradient(90deg, #00c6ff, #7d2ae8);
+  color: white;
+  box-shadow: 0 0 25px rgba(125,42,232,0.3);
+}
+.btn-edit:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 40px rgba(125,42,232,0.6);
+}
+
+.btn-del {
+  background: transparent;
+    font-weight: 600;
+  border: 2px solid #ff4b4b;
+  color: #ff4b4b;
+}
+.btn-del:hover { background: rgba(255,75,75,0.1); }
+
+.btn-logout {
+  background: transparent;
+  border: 2px solid #00c6ff;
+  color: #00c6ff;
+}
+.btn-logout:hover { background: rgba(0,198,255,0.1); }
+
+@keyframes spin {
+  from { transform: rotate(0); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==== АДАПТИВ ==== */
+@media (max-width: 900px) {
+  .profile-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    text-align: center;
+  }
+
+  .info-zone {
+    align-items: center;
+  }
+
+  .info-chip {
+    width: 90%;
+  }
+}
+</style>
+
+<section class="account-section">
+  <div class="profile-grid">
+
+    <!-- Левая часть (АВАТАР с гендером) -->
+    <div class="avatar-zone">
+      <div class="avatar-ring">
+        <div class="avatar-inner">
+          {% if user.gender and user.gender|lower == 'female' %}
+            <i class="fas fa-user-female"></i>
+          {% elif user.gender and user.gender|lower == 'male' %}
+            <i class="fas fa-user"></i>
+          {% else %}
+            <i class="fas fa-user-circle"></i>
+          {% endif %}
+        </div>
+      </div>
+      <h2 class="profile-name">{{ user.username }}</h2>
+      <p class="status">AI link active · last sync: just now</p>
+    </div>
+
+    <!-- Правая часть -->
+    <div class="info-zone">
+      <div class="info-chip"><strong>Email:</strong> {{ user.email }}</div>
+      <div class="info-chip"><strong>Age:</strong> {{ user.age or 'Not specified' }}</div>
+      <div class="info-chip"><strong>Gender:</strong> {{ user.gender or 'Not specified' }}</div>
+      <div class="info-chip"><strong>Height:</strong> {{ user.height or '—' }} cm</div>
+      <div class="info-chip"><strong>Weight:</strong> {{ user.weight or '—' }} kg</div>
+      <div class="info-chip"><strong>Allergies:</strong> {{ user.allergies or 'None' }}</div>
+      <div class="info-chip"><strong>Health conditions:</strong> {{ user.health_conditions or 'None' }}</div>
+
+      <div class="actions">
+        <a href="{{ url_for('edit_profile') }}" class="btn-edit">Edit Profile</a>
+        <form method="POST" action="{{ url_for('delete_account') }}" onsubmit="return confirm('Are you sure you want to delete your account?');">
+          <button type="submit" class="btn-del">Delete</button>
+        </form>
+        <a href="{{ url_for('logout') }}" class="btn-logout">Log Out</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+{% endblock %}

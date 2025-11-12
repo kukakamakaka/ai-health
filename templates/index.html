@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="hero">
+  <div class="hero-content">
+    <h1 class="gradient-text">Your AI Health Companion</h1>
+    <p class="subtitle">
+      Diagnose, predict, and improve your health — powered by Symptera Intelligence.
+    </p>
+
+    <div class="hero-buttons">
+  <a href="{{ url_for('tips') }}" class="btn-primary">Explore Health Tips</a>
+</div>
+
+  </div>
+
+  <div class="hero-visual">
+    <img src="{{ url_for('static', filename='images/ai_human.png') }}" alt="AI Human Silhouette">
+  </div>
+</section>
+
+{% endblock %}

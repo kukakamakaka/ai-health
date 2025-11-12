@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block content %}
+<main class="chat-container">
+    <section class="chat-window">
+        <div class="chat-header">
+            <h2>🧠 Symptera Chat</h2>
+            <p>Your personal AI health assistant</p>
+        </div>
+
+        <div id="chat-messages" class="chat-messages">
+            {% for msg in symptoms %}
+                <!-- USER MESSAGE -->
+                <div class="message user">
+                    <div class="bubble">
+                        <p>{{ msg.text }}</p>
+<span class="timestamp" data-time="{{ msg.created_at.isoformat() }}"></span>
+
+                    </div>
+                </div>
+
+                <!-- AI MESSAGE -->
+                <div class="message ai">
+                    <div class="bubble">
+                        <p>{{ msg.category }}</p>
+                        <span class="timestamp">{{ msg.time }}</span>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <form id="chat-form" method="POST" action="{{ url_for('symptoms') }}">
+            <div class="input-wrapper">
+                <input type="text" name="symptom" id="symptom" placeholder="Describe your symptom..." autocomplete="off" required>
+                <button type="submit">Send</button>
+            </div>
+        </form>
+    </section>
+</main>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("chat-form");
+    const input = document.getElementById("symptom");
+    const messages = document.getElementById("chat-messages");
+
+    form.addEventListener("submit", () => {
+        const loading = document.createElement("div");
+        loading.className = "typing-indicator";
+        loading.innerHTML = "<span></span><span></span><span></span>";
+        messages.appendChild(loading);
+        messages.scrollTop = messages.scrollHeight;
+    });
+});
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const timeElements = document.querySelectorAll(".timestamp");
+
+  timeElements.forEach(el => {
+    const utcTime = el.dataset.time;
+    if (!utcTime) return;
+
+    // Принудительно считаем, что время хранится в UTC
+    const utcDate = new Date(utcTime + "Z");
+
+    // Добавляем смещение Казахстана (GMT+5)
+    const offsetMs = 5 * 60 * 60 * 1000;
+    const localDate = new Date(utcDate.getTime() + offsetMs);
+
+    // Форматируем время красиво
+    const formatted = localDate.toLocaleTimeString([], {
+  hour: "2-digit",
+  minute: "2-digit",
+  hour12: false
+});
+
+
+    el.textContent = formatted;
+  });
+});
+</script>
+
+
+
+
+{% endblock %}

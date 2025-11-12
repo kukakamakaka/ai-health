@@ -1,0 +1,739 @@
+:root {
+  --bg-dark: #0F172A;
+  --primary: #7B61FF;
+  --accent: #00E5FF;
+  --text-light: #C5CAE9;
+  --white: #F9FAFB;
+  --transition: all 0.3s ease;
+}
+
+/* ---------- BASE ---------- */
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg-dark);
+  color: var(--text-light);
+  font-family: 'Poppins', sans-serif;
+}
+
+/* ---------- NAVBAR ---------- */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 80px;
+  background: transparent;
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  transition: background 0.3s ease;
+}
+
+.navbar.scrolled {
+  background: rgba(15, 23, 42, 0.9);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 1.4rem;
+}
+
+.logo img {
+  height: 38px;
+  margin-right: 10px;
+}
+
+.nav-center a {
+  color: #cbd5e1;
+  text-decoration: none;
+  margin: 0 16px;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.nav-center a:hover {
+  color: var(--accent);
+  text-shadow: 0 0 8px var(--accent);
+}
+
+.btn-login, .btn-signup, .btn-account {
+  border: 1px solid var(--primary);
+  color: var(--primary);
+  background: transparent;
+  padding: 8px 20px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: 0.3s ease;
+  margin-left: 10px;
+}
+
+.btn-login:hover, .btn-signup:hover, .btn-account:hover {
+  background: var(--primary);
+  color: #fff;
+  box-shadow: 0 0 15px rgba(123,97,255,0.5);
+}
+
+/* ---------- HERO ---------- */
+.hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 80px 100px;
+  min-height: 70vh; /* ✅ чтобы фон растягивался вверх до навбара */
+  background: radial-gradient(circle at 20% 40%, rgba(123,97,255,0.1), transparent 70%),
+              radial-gradient(circle at 80% 60%, rgba(0,229,255,0.08), transparent 70%),
+              var(--bg-dark);
+  overflow: hidden;
+}
+
+
+.gradient-text {
+  font-size: 3.2rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  margin: 20px 0 40px;
+}
+
+.btn-primary {
+  padding: 14px 32px;
+  border-radius: 30px;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: var(--white);
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.btn-primary:hover {
+  box-shadow: 0 0 20px rgba(0,229,255,0.8);
+}
+
+/* ---------- FOOTER ---------- */
+.footer {
+  text-align: center;
+  padding: 40px 0;
+  color: #94A3B8;
+  opacity: 0.7;
+  font-size: 0.9rem;
+}
+
+/* ---------- ANIMATIONS ---------- */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-content {
+  animation: fadeInUp 1.2s ease forwards;
+}
+
+.hero-visual img {
+  width: 760px;
+  animation: glowFloat 6s ease-in-out infinite;
+  filter: drop-shadow(0 0 20px rgba(0,229,255,0.3));
+}
+
+@keyframes glowFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 900px) {
+  .navbar { flex-direction: column; padding: 16px 30px; }
+  .hero { flex-direction: column; text-align: center; padding: 60px 40px; }
+  .hero-visual img { width: 280px; margin-top: 30px; }
+  .gradient-text { font-size: 2.4rem; }
+}
+
+.nav-right {
+  padding-right: 100px; /* 👈 уменьшает расстояние от правого края */
+}
+
+.navbar-light {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25px 80px;
+  background: none !important; /* 🔥 принудительно убираем фон */
+  backdrop-filter: none !important;
+  border: none;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 100;
+}
+
+/* ---------- AI CHAT STYLE ---------- */
+.chat-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 120px;
+  background: var(--bg-dark);
+  min-height: 100vh;
+}
+
+.chat-window {
+  width: 85%;
+  max-width: 800px;
+  height: 650px;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(123,97,255,0.2);
+  border-radius: 20px;
+  box-shadow: 0 0 40px rgba(0,229,255,0.1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+
+
+.chat-header {
+  text-align: center;
+  padding: 25px;
+  border-bottom: 1px solid rgba(123,97,255,0.1);
+}
+
+.chat-header h2 {
+  color: var(--accent);
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.chat-header p {
+  color: var(--text-light);
+  opacity: 0.8;
+  font-size: 0.9rem;
+}
+
+.chat-messages {
+  flex: 1;
+  padding: 25px;
+  overflow-y: auto; /* ✅ скроллим только внутри */
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  scroll-behavior: smooth;
+}
+
+/* Чтобы скролл выглядел аккуратно */
+.chat-messages::-webkit-scrollbar {
+  width: 6px;
+}
+.chat-messages::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  border-radius: 10px;
+}
+.chat-messages::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.chat-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* ✅ чтобы центрировать по вертикали */
+  background: var(--bg-dark);
+  padding: 0; /* убираем верхний отступ */
+  margin: 0;
+}
+
+.message {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  animation: fadeInUp 0.5s ease;
+}
+
+.message.user {
+  align-items: flex-end;
+}
+
+.bubble {
+  max-width: 75%;
+  padding: 14px 20px;
+  border-radius: 20px;
+  position: relative;
+  color: white;
+  line-height: 1.4;
+  word-wrap: break-word;
+  font-size: 1rem;
+}
+
+.user .bubble {
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  border-bottom-right-radius: 0;
+  box-shadow: 0 0 10px rgba(123,97,255,0.4);
+}
+
+.ai .bubble {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(123,97,255,0.2);
+  border-bottom-left-radius: 0;
+}
+
+.timestamp {
+  display: block;
+  font-size: 0.75rem;
+  opacity: 0.6;
+  margin-top: 5px;
+  text-align: right;
+}
+
+.input-wrapper {
+  display: flex;
+  border-top: 1px solid rgba(123,97,255,0.1);
+  background: rgba(15,23,42,0.9);
+  padding: 15px 20px;
+}
+
+.input-wrapper input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: var(--white);
+  font-size: 1rem;
+  outline: none;
+}
+
+.input-wrapper button {
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  border: none;
+  color: white;
+  font-weight: 600;
+  padding: 10px 22px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.input-wrapper button:hover {
+  box-shadow: 0 0 15px rgba(0,229,255,0.5);
+  transform: translateY(-2px);
+}
+
+.typing-indicator {
+  display: flex;
+  gap: 6px;
+  margin-left: 15px;
+}
+
+.typing-indicator span {
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  animation: blink 1.4s infinite both;
+}
+
+.typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+.typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes blink {
+  0%, 80%, 100% { opacity: 0; }
+  40% { opacity: 1; }
+}
+
+.chat-window::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  background: radial-gradient(circle at 30% 20%, rgba(123,97,255,0.08), transparent 70%);
+  pointer-events: none;
+}
+/* Hide footer on the chat page */
+body.chat-page .footer {
+  display: none;
+}
+
+
+/* 🌠 FULLSCREEN NEURAL SCAN */
+.neural-scan {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  background: radial-gradient(circle at 20% 30%, rgba(0,229,255,0.2), transparent 50%),
+              radial-gradient(circle at 80% 70%, rgba(123,97,255,0.25), transparent 50%),
+              #030614;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  color: #e4f2ff;
+}
+
+.neural-scan .overlay {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.03) 0,
+    rgba(255,255,255,0.03) 2px,
+    transparent 3px,
+    transparent 6px
+  );
+  animation: scanLines 12s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes scanLines {
+  from { background-position-y: 0; }
+  to { background-position-y: 100%; }
+}
+
+.scan-content {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+  padding: 40px;
+}
+
+.title-glow {
+  font-size: 3rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #00e5ff;
+  text-shadow: 0 0 30px rgba(0,229,255,0.8);
+  animation: glowPulse 3s infinite alternate;
+}
+
+@keyframes glowPulse {
+  from { text-shadow: 0 0 15px rgba(0,229,255,0.4); }
+  to { text-shadow: 0 0 35px rgba(0,229,255,1); }
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  opacity: 0.8;
+  margin-bottom: 40px;
+}
+
+.upload-zone {
+  border: 3px solid rgba(0,229,255,0.3);
+  border-radius: 50%;
+  width: 280px;
+  height: 280px;
+  margin: 40px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: rgba(0,229,255,0.05);
+  transition: 0.4s;
+  box-shadow: 0 0 50px rgba(0,229,255,0.2);
+}
+
+.upload-zone:hover,
+.upload-zone.active {
+  transform: scale(1.05);
+  box-shadow: 0 0 80px rgba(0,229,255,0.5);
+  background: rgba(0,229,255,0.1);
+}
+
+.scan-icon {
+  font-size: 3rem;
+  margin-bottom: 10px;
+  animation: pulse 2s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.6; }
+}
+
+.loading {
+  margin-top: 40px;
+  animation: fadeIn 0.8s ease;
+}
+
+.loading.hidden {
+  display: none;
+}
+
+.laser-bar {
+  width: 300px;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, #00e5ff, transparent);
+  animation: laserMove 1.5s linear infinite;
+  margin: 0 auto 10px;
+}
+
+@keyframes laserMove {
+  from { transform: translateX(-150px); opacity: 0.5; }
+  to { transform: translateX(150px); opacity: 1; }
+}
+
+.scan-result {
+  margin-top: 60px;
+  animation: fadeInUp 1s ease forwards;
+}
+
+.result-img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: 2px solid rgba(0,229,255,0.4);
+  object-fit: cover;
+  box-shadow: 0 0 40px rgba(0,229,255,0.4);
+  margin-bottom: 20px;
+}
+
+.result-text h3 {
+  color: #7b61ff;
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+}
+
+.result-text p {
+  font-size: 1rem;
+  color: #e4f2ff;
+}
+
+.timestamp {
+  display: block;
+  margin-top: 10px;
+  font-size: 0.9rem;
+  opacity: 0.6;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+
+/* ---------- Symptera Steps Section ---------- */
+.symptera-steps {
+  position: relative;
+  background: radial-gradient(circle at center, #0a0014 0%, #000 100%);
+  color: #fff;
+  overflow: hidden;
+  padding: 150px 0;
+}
+
+.symptera-steps h2 {
+  text-align: center;
+  font-size: 2.8rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #e4cfa2;
+  margin-bottom: 120px;
+  text-shadow: 0 0 20px rgba(228, 207, 162, 0.25);
+}
+
+.steps-container {
+  position: relative;
+  width: 100%;
+  height: 2300px;
+}
+
+.steps-path {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  width: 80%;
+  height: 100%;
+  opacity: 0.85;
+}
+
+/* ШАГИ */
+.step {
+  position: absolute;
+  text-align: left;
+  max-width: 340px;
+  opacity: 0.25;
+  transition: all 0.6s ease;
+  transform-origin: center;
+}
+
+.step h3 {
+  color: #7d2ae8;
+  font-size: 2rem;
+  margin-bottom: 10px;
+  font-weight: 700;
+  text-shadow: 0 0 8px rgba(125, 42, 232, 0.3);
+}
+
+.step p {
+  color: #cfcfcf;
+  font-size: 1.15rem;
+  line-height: 1.8;
+}
+
+/* Позиции шагов */
+.step1 { top: 200px; left: 18%; }
+.step2 { top: 750px; right: 18%; text-align: right; }
+.step3 { top: 1300px; left: 20%; }
+.step4 { top: 1820px; right: 20%; text-align: right; }
+
+/* Активные шаги */
+.step.active {
+  opacity: 1;
+  transform: scale(1.08);
+}
+.step.active h3 {
+  color: #00c6ff;
+  text-shadow: 0 0 20px #00c6ff;
+}
+
+/* Финальный экран */
+.final-screen {
+  position: relative;
+  text-align: center;
+  margin-top: 180px;
+  padding: 200px 20px;
+  opacity: 0;
+  transition: opacity 1.5s ease, transform 1.5s ease;
+  transform: translateY(40px);
+}
+.final-screen.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Светящееся поле */
+.final-screen .glow {
+  position: absolute;
+  width: 900px;
+  height: 900px;
+  background: radial-gradient(circle, rgba(125,42,232,0.45), rgba(228,207,162,0));
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  filter: blur(150px);
+  z-index: 0;
+}
+
+/* Тексты финала */
+.final-screen h2,
+.final-screen p {
+  position: relative;
+  z-index: 2;
+}
+
+.final-screen h2 {
+  color: #e4cfa2;
+  font-size: 2.6rem;
+  font-weight: 700;
+  text-shadow: 0 0 25px rgba(125, 42, 232, 0.5);
+}
+
+.final-screen p {
+  color: #b8a3e0;
+  margin-top: 15px;
+  font-size: 1.3rem;
+  font-weight: 400;
+  letter-spacing: 0.2px;
+}
+
+/* Эффект свечения линии */
+#symptera-path-progress {
+  filter: drop-shadow(0 0 10px #7d2ae8);
+}
+
+
+
+/* ---------- RUNNING INFO LINE ---------- */
+.symptera-marquee {
+  width: 100%;
+  overflow: hidden;
+  background: linear-gradient(90deg, rgba(125,42,232,0.15), rgba(0,198,255,0.15));
+  border-top: 1px solid rgba(228,207,162,0.2);
+  border-bottom: 1px solid rgba(228,207,162,0.2);
+  padding: 18px 0;
+  backdrop-filter: blur(4px);
+  box-shadow: inset 0 0 20px rgba(125,42,232,0.2);
+}
+
+.marquee-track {
+  display: inline-block;
+  white-space: nowrap;
+  animation: marqueeScroll 20s linear infinite;
+}
+
+.marquee-track span {
+  font-size: 1.1rem;
+  color: #e4cfa2;
+  letter-spacing: 0.5px;
+  text-shadow: 0 0 8px rgba(125,42,232,0.4);
+  margin-right: 80px;
+  font-weight: 500;
+}
+
+@keyframes marqueeScroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+/* ---------- AI HEALTH REEL ---------- */
+.symptera-video-reel {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+}
+
+.reel-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.5) contrast(1.15) saturate(1.2);
+  transition: opacity 1s ease;
+  opacity: 0;
+  z-index: 0;
+}
+
+.reel-video.active {
+  opacity: 1;
+  z-index: 1;
+}
+
+.video-overlay {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  color: #fff;
+  max-width: 850px;
+  padding: 0 20px;
+}
+
+.video-overlay h2 {
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: #e4cfa2;
+  text-shadow: 0 0 30px rgba(125, 42, 232, 0.7);
+  margin-bottom: 15px;
+}
+
+.video-overlay p {
+  font-size: 1.25rem;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.7;
+}
+
+

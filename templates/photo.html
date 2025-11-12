@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% block content %}
+<main class="neural-scan">
+  <div class="overlay"></div>
+
+  <div class="scan-content">
+    <h1 class="title-glow">Symptera Neural Scan</h1>
+    <p class="subtitle">Upload or capture a photo for instant AI skin analysis</p>
+
+    <form method="POST" enctype="multipart/form-data" id="scanForm" class="scan-form">
+      <input type="file" name="photo" id="photo" accept="image/*" hidden>
+      <div id="uploadZone" class="upload-zone">
+        <span class="scan-icon">🧬</span>
+        <p>Click anywhere or drag a photo to begin</p>
+      </div>
+
+      <!-- ✨ КРАСИВАЯ КНОПКА ANALYZE -->
+      <button type="submit" id="analyzeBtn" class="analyze-btn hidden">Analyze</button>
+    </form>
+
+    <div id="loading" class="loading hidden">
+      <div class="laser-bar"></div>
+      <p>Analyzing biometric patterns...</p>
+    </div>
+
+    {% if result %}
+  <div class="scan-result">
+    <img src="{{ result.url }}" class="result-img" alt="Scanned photo">
+    <div class="result-text">
+      <h3>AI Findings:</h3>
+      <p>{{ result.analysis }}</p>
+      <span class="timestamp">{{ now().strftime('%H:%M, %B %d, %Y') }}</span>
+    </div>
+  </div>
+{% endif %}
+
+  </div>
+</main>
+
+<script>
+const uploadZone = document.getElementById('uploadZone');
+const inputFile = document.getElementById('photo');
+const loading = document.getElementById('loading');
+const analyzeBtn = document.getElementById('analyzeBtn');
+const form = document.getElementById('scanForm');
+
+uploadZone.addEventListener('click', () => inputFile.click());
+uploadZone.addEventListener('dragover', e => {
+  e.preventDefault();
+  uploadZone.classList.add('active');
+});
+uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('active'));
+uploadZone.addEventListener('drop', e => {
+  e.preventDefault();
+  inputFile.files = e.dataTransfer.files;
+  uploadZone.classList.remove('active');
+  analyzeBtn.classList.remove('hidden');
+});
+inputFile.addEventListener('change', () => {
+  if (inputFile.files.length > 0) {
+    analyzeBtn.classList.remove('hidden');
+  }
+});
+
+form.addEventListener('submit', () => {
+  loading.classList.remove('hidden');
+});
+</script>
+
+<style>
+footer { display: none !important; }
+
+/* 🌟 Кнопка Analyze */
+.analyze-btn {
+  margin-top: 40px;
+  padding: 16px 60px;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(90deg, #00e5ff, #7b61ff);
+  border: none;
+  border-radius: 40px;
+  cursor: pointer;
+  box-shadow: 0 0 30px rgba(0,229,255,0.5);
+  transition: all 0.3s ease;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.6s forwards;
+}
+
+.analyze-btn:hover {
+  box-shadow: 0 0 60px rgba(0,229,255,0.8);
+  transform: scale(1.05);
+  background: linear-gradient(90deg, #7b61ff, #00e5ff);
+}
+
+.hidden {
+  display: none !important;
+}
+</style>
+{% endblock %}

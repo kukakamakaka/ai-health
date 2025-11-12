@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Edit Profile | Aika Terminal Interface</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  color: #e2e8f0;
+  background: radial-gradient(circle at 25% 25%, #050516, #0b0e2a 70%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+form {
+  width: 100%;
+  max-width: 700px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  padding: 40px;
+  backdrop-filter: blur(14px);
+  background: rgba(18, 18, 36, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 40px rgba(0, 198, 255, 0.1);
+  animation: fadeIn 0.8s ease;
+}
+
+h2 {
+  text-align: center;
+  font-size: 1.9rem;
+  margin-bottom: 10px;
+  font-weight: 600;
+  background: linear-gradient(90deg, #00c6ff, #7d2ae8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 25px rgba(125, 42, 232, 0.4);
+  letter-spacing: 0.5px;
+}
+
+label {
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: #9fb4ff;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+  margin-top: 4px;
+}
+
+input, select, textarea {
+  width: 100%;
+  height: 48px;
+  padding: 0 14px;
+  font-size: 0.95rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #e2e8f0;
+  outline: none;
+  transition: 0.3s;
+  border-radius: 0; /* четкость */
+  box-sizing: border-box;
+}
+
+textarea {
+  height: 100px;
+  resize: none;
+  padding: 12px 14px;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: #00c6ff;
+  box-shadow: 0 0 20px rgba(0,198,255,0.4);
+  background: rgba(0,198,255,0.08);
+}
+
+.checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  margin-top: 8px;
+}
+
+.checkbox-group label {
+  color: #cbd5e1;
+  font-size: 0.9rem;
+  text-transform: none;
+}
+
+.checkbox-group input {
+  accent-color: #00c6ff;
+  margin-right: 6px;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 25px;
+}
+
+button, a.btn {
+  border: none;
+  border-radius: 0;
+  padding: 14px 32px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: 0.3s ease;
+  text-decoration: none;
+  letter-spacing: 0.7px;
+  height: 48px;
+  line-height: 20px;
+}
+
+button {
+  background: linear-gradient(90deg, #00c6ff, #7d2ae8);
+  color: white;
+  box-shadow: 0 0 30px rgba(125, 42, 232, 0.25);
+}
+
+button:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 45px rgba(125, 42, 232, 0.6);
+}
+
+.btn.cancel {
+  background: transparent;
+  border: 1px solid #9fb4ff;
+  color: #9fb4ff;
+}
+
+.btn.cancel:hover {
+  background: rgba(159,180,255,0.1);
+}
+
+@keyframes fadeIn {
+  from {opacity: 0; transform: translateY(25px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+
+@media (max-width: 700px) {
+  form { padding: 25px; }
+  h2 { font-size: 1.5rem; }
+}
+</style>
+</head>
+
+<body>
+<form method="POST">
+  <h2><i class="fas fa-user-gear"></i> EDIT PROFILE</h2>
+
+  <label>Username</label>
+  <input type="text" name="username" value="{{ user.username }}" required>
+
+  <label>Age</label>
+  <input type="number" name="age" value="{{ user.age or '' }}">
+
+  <label>Gender</label>
+  <select name="gender">
+    <option value="female" {% if user.gender == 'female' %}selected{% endif %}>Female</option>
+    <option value="male" {% if user.gender == 'male' %}selected{% endif %}>Male</option>
+    <option value="other" {% if user.gender == 'other' %}selected{% endif %}>Other</option>
+  </select>
+
+  <label>Height (cm)</label>
+  <input type="number" name="height" step="0.1" value="{{ user.height or '' }}">
+
+  <label>Weight (kg)</label>
+  <input type="number" name="weight" step="0.1" value="{{ user.weight or '' }}">
+
+  <label>Health Conditions</label>
+  <textarea name="health_conditions">{{ user.health_conditions or '' }}</textarea>
+
+  <label>Allergies</label>
+  <textarea name="allergies">{{ user.allergies or '' }}</textarea>
+
+  <label>Medications</label>
+  <textarea name="medications">{{ user.medications or '' }}</textarea>
+
+  <label>Sleep Hours</label>
+  <input type="number" name="sleep_hours" step="0.1" value="{{ user.sleep_hours or '' }}">
+
+  <label>Activity Level</label>
+  <input type="text" name="activity_level" value="{{ user.activity_level or '' }}">
+
+  <label>Diet Type</label>
+  <input type="text" name="diet_type" value="{{ user.diet_type or '' }}">
+
+  <div class="checkbox-group">
+    <label><input type="checkbox" name="smoking" {% if user.smoking %}checked{% endif %}> Smokes</label>
+    <label><input type="checkbox" name="alcohol" {% if user.alcohol %}checked{% endif %}> Drinks Alcohol</label>
+  </div>
+
+  <div class="actions">
+    <button type="submit"><i class="fas fa-save"></i> SAVE</button>
+    <a href="{{ url_for('dashboard') }}" class="btn cancel">CANCEL</a>
+  </div>
+</form>
+</body>
+</html>

@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Symptera | AI Health Assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/logo_symptera.png') }}">
+</head>
+<body>
+    <!-- NAVBAR -->
+    <header class="navbar">
+        <div class="nav-left">
+            <a href="{{ url_for('index') }}" class="logo">
+                <img src="{{ url_for('static', filename='images/logo1_symptera.png') }}" alt="Symptera Logo">
+                <span>Symptera</span>
+            </a>
+        </div>
+
+        <nav class="nav-center">
+    <a href="{{ url_for('index') }}">Home</a>
+    <a href="{{ url_for('symptoms') }}">Symptoms</a>
+    <a href="{{ url_for('photo') }}">Scan</a>
+    <a href="{{ url_for('tips') }}">Health Tips</a>
+    <a href="{{ url_for('history') }}">History</a>
+    <a href="{{ url_for('about') }}">About</a>
+</nav>
+
+        <div class="nav-right">
+            {% if current_user.is_authenticated %}
+                <a href="{{ url_for('account') }}" class="btn-account">Account</a>
+            {% else %}
+                <a href="{{ url_for('login') }}" class="btn-login">Login</a>
+                <a href="{{ url_for('register') }}" class="btn-signup">Sign Up</a>
+            {% endif %}
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+      <!-- RUNNING INFO LINE -->
+<div class="symptera-marquee">
+  <div class="marquee-track">
+    <span> Symptera cares about your health — your AI companion for daily well-being  </span>
+    <span> Track, improve, and feel better with Symptera — powered by Aika Intelligence  </span>
+    <span> Personalized insights. Real progress. Your journey starts here  </span>
+  </div>
+</div>
+
+
+    <!-- AI HEALTH REEL -->
+<section class="symptera-video-reel">
+  <video class="reel-video active" autoplay muted playsinline></video>
+  <video class="reel-video next" muted playsinline></video>
+
+  <div class="video-overlay">
+    <h2>The Future of Health Is Here</h2>
+    <p>Symptera merges science, emotion, and artificial intelligence — guiding you toward a healthier tomorrow.</p>
+  </div>
+</section>
+
+<script>
+const videos = [
+  "{{ url_for('static', filename='videos/ai_health_1.mp4') }}",
+  "{{ url_for('static', filename='videos/ai_health_2.mp4') }}",
+  "{{ url_for('static', filename='videos/ai_health_3.mp4') }}",
+  "{{ url_for('static', filename='videos/ai_health_4.mp4') }}",
+  "{{ url_for('static', filename='videos/ai_health_5.mp4') }}"
+];
+
+let current = 0;
+const v1 = document.querySelector(".reel-video.active");
+const v2 = document.querySelector(".reel-video.next");
+
+// Загружаем первые два
+v1.src = videos[current];
+v2.src = videos[(current + 1) % videos.length];
+v1.load();
+v2.load();
+v1.play();
+
+function switchVideo() {
+  // Плавное затемнение
+  v1.classList.toggle("active");
+  v1.classList.toggle("next");
+  v2.classList.toggle("active");
+  v2.classList.toggle("next");
+
+  current = (current + 1) % videos.length;
+
+  // Подготовим следующее видео
+  const nextToLoad = v1.classList.contains("next") ? v1 : v2;
+  nextToLoad.src = videos[(current + 1) % videos.length];
+  nextToLoad.load();
+
+  // Запускаем текущее активное
+  const activeVid = v1.classList.contains("active") ? v1 : v2;
+  activeVid.play();
+}
+
+// Меняем каждые 4 секунды
+setInterval(switchVideo, 4000);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  <section id="symptera-steps" class="symptera-steps">
+  <h2>Your Symptera Journey in 4 Steps</h2>
+
+  <div class="steps-container">
+    <!-- SVG PATH -->
+    <svg viewBox="0 0 1000 2100" class="steps-path">
+      <path
+        id="symptera-path"
+        d="M 200 100
+           C 600 300, 400 600, 700 800
+           S 300 1200, 600 1400
+           S 400 1800, 800 2000"
+        stroke="#333"
+        stroke-width="4"
+        fill="none"
+      />
+      <path
+        id="symptera-path-progress"
+        d="M 200 100
+           C 600 300, 400 600, 700 800
+           S 300 1200, 600 1400
+           S 400 1800, 800 2000"
+        stroke="url(#grad)"
+        stroke-width="4"
+        fill="none"
+        stroke-linecap="round"
+        stroke-dasharray="4000"
+        stroke-dashoffset="4000"
+      />
+      <defs>
+        <linearGradient id="grad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#00c6ff" />
+          <stop offset="50%" stop-color="#7d2ae8" />
+          <stop offset="100%" stop-color="#e4cfa2" />
+        </linearGradient>
+      </defs>
+    </svg>
+
+    <!-- STEPS -->
+    <div class="step step1">
+      <h3>Step 1</h3>
+      <p>Create your personal profile and let <b>Aika</b> learn about your lifestyle, health habits, and goals.</p>
+    </div>
+
+    <div class="step step2">
+      <h3>Step 2</h3>
+      <p>Describe your symptoms or upload a photo for instant AI-powered health analysis.</p>
+    </div>
+
+    <div class="step step3">
+      <h3>Step 3</h3>
+      <p>Receive personalized recommendations tailored to your body, sleep, and nutrition balance.</p>
+    </div>
+
+    <div class="step step4">
+      <h3>Step 4</h3>
+      <p>Track your progress and get inspired every day — your well-being starts with consistency.</p>
+    </div>
+  </div>
+
+  <!-- FINAL -->
+  <div class="final-screen">
+    <div class="glow"></div>
+    <h2>Your path to better health has begun</h2>
+    <p>Symptera is always with you — guiding, motivating, and helping you feel your best.</p>
+  </div>
+</section>
+
+<script>
+document.addEventListener("scroll", () => {
+  const scrollY = window.scrollY;
+  const windowH = window.innerHeight;
+  const totalH = document.body.scrollHeight - windowH;
+  const progress = Math.min(scrollY / totalH, 1);
+
+  const path = document.getElementById("symptera-path-progress");
+  const length = 4000;
+  path.style.strokeDashoffset = length - length * progress;
+
+  const steps = document.querySelectorAll(".step");
+  steps.forEach(step => {
+    const rect = step.getBoundingClientRect();
+    const visible = rect.top < windowH * 0.6 && rect.bottom > windowH * 0.4;
+    step.classList.toggle("active", visible);
+  });
+
+  const final = document.querySelector(".final-screen");
+  if (progress > 0.85) final.classList.add("visible");
+  else final.classList.remove("visible");
+});
+</script>
+
+
+
+
+
+
+    <!-- FOOTER -->
+  <footer class="nextgen-footer">
+  <div class="footer-content">
+    <div class="footer-left">
+      <h2 class="footer-logo">Symptera<span>AI</span></h2>
+      <p class="footer-desc">
+        Empowering your health journey through AI. Diagnose, predict, and improve with Symptera Intelligence.
+      </p>
+
+      <div class="footer-tags">
+        <span>AI Health</span>
+        <span>Wellness</span>
+        <span>Diagnostics</span>
+        <span>Predictive Care</span>
+        <span>SmartTech</span>
+      </div>
+
+      <a href="/tips" class="discover-btn">Discover More</a>
+    </div>
+
+    <div class="footer-right">
+      <div class="footer-links">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/symptoms">Symptoms</a></li>
+          <li><a href="/photo">Scan</a></li>
+          <li><a href="/tips">Health Tips</a></li>
+          <li><a href="/history">History</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-links">
+        <h4>About</h4>
+        <ul>
+          <li><a href="#">Our Mission</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Use</a></li>
+          <li><a href="#">Support</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-links">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="https://t.me/onege" target="_blank">Telegram</a></li>
+          <li><a href="https://github.com/Onege18" target="_blank">GitHub</a></li>
+          <li><a href="mailto:contact@symptera.ai">Email</a></li>
+          <li><a href="#">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2025 Symptera — Powered by Aika Intelligence. All rights reserved.</p>
+  </div>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+    .nextgen-footer {
+      background-color: #020406;
+      color: #cfd8e3;
+      padding: 80px 8% 40px;
+      font-family: "Poppins", sans-serif;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 60px;
+    }
+
+    /* LEFT SECTION */
+    .footer-left {
+      flex: 1 1 350px;
+      max-width: 480px;
+    }
+
+    .footer-logo {
+      font-size: 2rem;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+
+    .footer-logo span {
+      color: #00c0ff;
+      margin-left: 4px;
+    }
+
+    .footer-desc {
+      color: #9fb4c5;
+      font-size: 0.95rem;
+      margin-bottom: 25px;
+      line-height: 1.6;
+    }
+
+    .footer-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 25px;
+    }
+
+    .footer-tags span {
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      color: #b8dfff;
+      transition: all 0.3s ease;
+    }
+
+    .footer-tags span:hover {
+      background: rgba(0, 255, 255, 0.15);
+      color: #00eaff;
+    }
+
+    .discover-btn {
+      display: inline-block;
+      background: #fff;
+      color: #000;
+      padding: 10px 22px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+    }
+
+    .discover-btn:hover {
+      background: #00eaff;
+      color: #0a0a0a;
+      box-shadow: 0 0 15px rgba(0, 234, 255, 0.3);
+    }
+
+    /* RIGHT SECTION */
+    .footer-right {
+      display: flex;
+      gap: 60px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links h4 {
+      color: #fff;
+      font-size: 1rem;
+      margin-bottom: 14px;
+      font-weight: 600;
+    }
+
+    .footer-links ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .footer-links li {
+      margin-bottom: 10px;
+    }
+
+    .footer-links a {
+      color: #9fb4c5;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: 0.3s;
+    }
+
+    .footer-links a:hover {
+      color: #00eaff;
+      text-shadow: 0 0 8px #00eaff;
+    }
+
+    /* BOTTOM */
+    .footer-bottom {
+      text-align: center;
+      margin-top: 60px;
+      font-size: 0.85rem;
+      color: #7c8ea0;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 20px;
+    }
+
+    @media (max-width: 900px) {
+      .footer-content {
+        flex-direction: column;
+      }
+
+      .footer-right {
+        justify-content: space-between;
+      }
+
+      .footer-tags {
+        justify-content: start;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .footer-left {
+        text-align: center;
+      }
+
+      .footer-tags {
+        justify-content: center;
+      }
+
+      .footer-right {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .footer-links {
+        text-align: center;
+      }
+    }
+  </style>
+</footer>
+
+<body class="{% if request.endpoint == 'symptoms' %}chat-page{% endif %}">
+
+</html>
